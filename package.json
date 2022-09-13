@@ -6,6 +6,7 @@
     "name": "crackaf",
     "url": "https://github.com/crackaf"
   },
+  "packageManager": "yarn@3.2.3",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -78,17 +79,5 @@
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
     "webpack": "^5.74.0"
-  },
-  "eslintConfig": {
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
   }
 }
