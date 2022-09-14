@@ -1,3 +1,18 @@
+import {
+  ThemeProvider,
+  CssBaseline,
+  StyledEngineProvider,
+} from "@mui/material";
+
+import theme from "theme";
+
 export const App = () => {
-  return <h1>Hello World</h1>;
+  return (
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div>Hello World</div>
+      </ThemeProvider>
+    </StyledEngineProvider>
+  );
 };
