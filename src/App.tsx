@@ -1,18 +1,20 @@
-import {
-  ThemeProvider,
-  CssBaseline,
-  StyledEngineProvider,
-} from "@mui/material";
+import { useRoutes } from "react-router-dom";
 
-import theme from "theme";
+import { CssBaseline } from "@mui/material";
+import LocalizationProvider from "@mui/x-date-pickers/LocalizationProvider";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+
+import router from "router";
+
+import ThemeProvider from "theme/ThemeProvider";
 
 export const App = () => {
+  const content = useRoutes(router);
+
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div>Hello World</div>
-      </ThemeProvider>
-    </StyledEngineProvider>
+    <ThemeProvider>
+      <CssBaseline />
+      {content}
+    </ThemeProvider>
   );
 };
