@@ -4,6 +4,9 @@ import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import { SidebarProvider } from "contexts/SidebarContext";
 
+import store, { persistor } from "state";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
 import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
@@ -15,11 +18,15 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <HelmetProvider>
-      <SidebarProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </SidebarProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <SidebarProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </SidebarProvider>
+        </PersistGate>
+      </Provider>
     </HelmetProvider>
   </StrictMode>
 );

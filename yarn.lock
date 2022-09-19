@@ -13054,6 +13054,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jose@npm:^4.9.3":
+  version: 4.9.3
+  resolution: "jose@npm:4.9.3"
+  checksum: 95865830768dcf82774d19e92dc854c5bc9dc5d9c9626a65a2974272e3aca5d2f56678611943f85802431d2d6d6f8bff9548b7cdb7578e6fe61529bd9c82e1d3
+  languageName: node
+  linkType: hard
+
 "js-sdsl@npm:^4.1.4":
   version: 4.1.4
   resolution: "js-sdsl@npm:4.1.4"
@@ -17077,6 +17084,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"redux-persist@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "redux-persist@npm:6.0.0"
+  peerDependencies:
+    redux: ">4.0.0"
+  checksum: edaf10dbf17351ce8058d0802357adae8665b3a1ff39371834e37838ddbe1a79cccbc717b8ba54acb5307651ccf51d0f7dc1cbc8dbae0726ff952d11ef61c6b8
+  languageName: node
+  linkType: hard
+
 "redux-thunk@npm:^2.4.1":
   version: 2.4.1
   resolution: "redux-thunk@npm:2.4.1"
@@ -19070,6 +19086,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-storybook: ^0.6.4
     husky: ^8.0.0
+    jose: ^4.9.3
     nprogress: ^0.2.0
     numeral: ^2.0.6
     prettier: ^2.7.1
@@ -19083,6 +19100,7 @@ __metadata:
     react-router-dom: ^6.3.0
     react-scripts: 5.0.1
     react-toastify: ^9.0.8
+    redux-persist: ^6.0.0
     typescript: ^4.4.2
     web-vitals: ^2.1.0
     webpack: ^5.74.0

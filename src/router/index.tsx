@@ -19,6 +19,10 @@ const Loader = (Component: any) =>
 // Pages
 
 const Overview = Loader(lazy(() => import("content/overview")));
+const Login = Loader(lazy(() => import("pages/Login")));
+const SignUp = Loader(lazy(() => import("pages/SignUp")));
+const Logout = Loader(lazy(() => import("pages/Logout")));
+const Profile = Loader(lazy(() => import("pages/Profile")));
 
 // Dashboards
 
@@ -72,6 +76,32 @@ const routes = [
       {
         path: "overview",
         element: <Navigate to="/" replace />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "signup",
+        element: <SignUp />,
+      },
+      {
+        path: "logout",
+        element: <Logout />,
+      },
+      {
+        path: "register",
+        element: <Navigate to="/signup" replace />,
+      },
+      {
+        path: "profile",
+        element: <SidebarLayout />,
+        children: [
+          {
+            path: "",
+            element: <Profile />,
+          },
+        ],
       },
       {
         path: "status",
