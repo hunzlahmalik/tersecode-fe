@@ -12,7 +12,6 @@ import {
   Button,
   lighten,
   darken,
-  Tooltip,
 } from "@mui/material";
 
 import Logo from "components/LogoSign";

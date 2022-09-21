@@ -22,8 +22,13 @@ export const profileReducer = createReducer(initialState, (builder) => {
     .addCase(getProfile.fulfilled, (state, action) => {
       state.isLoading = false;
       if (action.payload.id) {
-        // eslint-disable-next-line no-param-reassign
-        state = { ...state, ...action.payload };
+        state.id = action.payload.id;
+        state.bio = action.payload.bio;
+        state.avatar = action.payload.avatar;
+        state.github = action.payload.github;
+        state.linkedin = action.payload.linkedin;
+        state.country = action.payload.country;
+        state.user = action.payload.user;
       } else {
         state.error = action.payload;
       }
@@ -38,8 +43,12 @@ export const profileReducer = createReducer(initialState, (builder) => {
     .addCase(updateProfile.fulfilled, (state, action) => {
       state.isLoading = false;
       if (action.payload.id) {
-        // eslint-disable-next-line no-param-reassign
-        state = { ...state, ...action.payload };
+        state.id = action.payload.id;
+        state.bio = action.payload.bio;
+        state.avatar = action.payload.avatar;
+        state.github = action.payload.github;
+        state.linkedin = action.payload.linkedin;
+        state.country = action.payload.country;
       } else {
         state.error = action.payload;
       }

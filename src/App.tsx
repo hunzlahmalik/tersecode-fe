@@ -1,15 +1,23 @@
-import { useRoutes } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter, useRoutes } from "react-router-dom";
+import { SidebarProvider } from "contexts/SidebarContext";
 import { ToastContainer } from "react-toastify";
-
+import { useAppSelector, useAppDispatch } from "state";
+import { getProfile } from "state/profile/actions";
+import {
+  selectUserUsername,
+  selectUserIsAuthenticated,
+} from "state/user/selectors";
+import { selectProfile } from "state/profile/selectors";
+import ThemeProvider from "theme/ThemeProvider";
 import { CssBaseline } from "@mui/material";
 
 import router from "router";
-import ThemeProvider from "theme/ThemeProvider";
+
 import "react-toastify/dist/ReactToastify.css";
 
-export const App = () => {
+const AppMiddleware = () => {
   const content = useRoutes(router);
-
   return (
     <ThemeProvider>
       <CssBaseline />
@@ -27,5 +35,33 @@ export const App = () => {
         theme="dark"
       />
     </ThemeProvider>
+  );
+};
+
+export const App = () => {
+  const dispatch = useAppDispatch();
+  const username = useAppSelector(selectUserUsername);
+  const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
+  const profile = useAppSelector(selectProfile);
+
+  useEffect(() => {
+    if (
+      (!profile || profile.id < 0) &&
+      isAuthenticated &&
+      username &&
+      !profile.isLoading
+    ) {
+      setTimeout(() => {
+        dispatch(getProfile({ username }));
+      }, 1000);
+    }
+  }, [dispatch, isAuthenticated, profile, username]);
+
+  return (
+    <SidebarProvider>
+      <BrowserRouter>
+        <AppMiddleware />
+      </BrowserRouter>
+    </SidebarProvider>
   );
 };

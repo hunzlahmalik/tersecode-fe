@@ -14,6 +14,7 @@ import { Helmet } from "react-helmet-async";
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 
 const MainContent = styled(Box)(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ theme }) => `
     height: 100%;
     display: flex;

@@ -1,6 +1,6 @@
 import { useAppDispatch } from "state";
 import { useNavigate } from "react-router-dom";
-import { LOG_OUT } from "state/actions";
+import { logOut } from "state/actions";
 import { useEffect } from "react";
 
 export const Logout = () => {
@@ -8,7 +8,7 @@ export const Logout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(LOG_OUT());
+    dispatch(logOut());
     navigate("/login", { replace: true });
   }, [dispatch, navigate]);
   return null;

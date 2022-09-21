@@ -23,7 +23,8 @@ const Login = Loader(lazy(() => import("pages/Login")));
 const SignUp = Loader(lazy(() => import("pages/SignUp")));
 const Logout = Loader(lazy(() => import("pages/Logout")));
 const Profile = Loader(lazy(() => import("pages/Profile")));
-
+const ProfileSetting = Loader(lazy(() => import("pages/ProfileSetting")));
+const Problems = Loader(lazy(() => import("pages/Problems")));
 // Dashboards
 
 const Tasks = Loader(lazy(() => import("content/dashboards/Tasks")));
@@ -100,6 +101,21 @@ const routes = [
           {
             path: "",
             element: <Profile />,
+          },
+          {
+            path: "setting",
+            element: <ProfileSetting />,
+          },
+        ],
+      },
+
+      {
+        path: "problems",
+        element: <SidebarLayout />,
+        children: [
+          {
+            path: "",
+            element: <Problems />,
           },
         ],
       },

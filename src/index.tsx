@@ -1,8 +1,6 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter } from "react-router-dom";
-import { SidebarProvider } from "contexts/SidebarContext";
 
 import store, { persistor } from "state";
 import { PersistGate } from "redux-persist/integration/react";
@@ -20,11 +18,7 @@ root.render(
     <HelmetProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <SidebarProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </SidebarProvider>
+          <App />
         </PersistGate>
       </Provider>
     </HelmetProvider>

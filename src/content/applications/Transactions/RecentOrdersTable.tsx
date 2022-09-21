@@ -118,6 +118,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     let value: string | null = null;
 
     if (e.target.value !== "all") {
+      // eslint-disable-next-line prefer-destructuring
       value = e.target.value;
     }
 

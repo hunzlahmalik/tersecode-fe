@@ -5,8 +5,7 @@ import store from "state";
 const axios = axiosRaw.create({
   baseURL: `${API}/`,
   headers: {
-    // "Content-Type": "application/json",
-    // "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json",
   },
 });
 
