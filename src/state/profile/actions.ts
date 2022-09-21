@@ -8,8 +8,8 @@ import { ProfileAPIResponse, ProfileState } from "./types";
 
 export const getProfile = createAsyncThunk(
   "user/getProfile",
-  async (payload: { username: string }): Promise<ProfileAPIResponse> => {
-    const { data } = await axios.get(`${PROFILE_EP}${payload.username}/`);
+  async ({ username }: { username: string }): Promise<ProfileAPIResponse> => {
+    const { data } = await axios.get(`${PROFILE_EP}${username}/`);
     return data;
   }
 );
@@ -20,10 +20,18 @@ export const updateProfile = createAsyncThunk(
     username,
     payload,
   }: {
-    payload: Partial<ProfileState> | FormData;
+    payload: Omit<Partial<ProfileState>, "user"> &
+      Partial<{
+        user: Omit<Partial<ProfileState["user"]>, "username" | "email">;
+      }>;
     username: string;
   }): Promise<ProfileAPIResponse> => {
-    console.error(payload);
+    const formData = new FormData();
+    Object.entries(payload).forEach(([key, value]) => {
+      if (key && key in payload) {
+        formData.append(key, value as unknown as string | Blob);
+      }
+    });
     const { data } = await axios.put(`${PROFILE_EP}${username}/`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",

@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { axios } from "config/axios";
 import { LOGIN_EP, SIGNUP_EP, TOK_REFRESH_EP } from "constants/endpoints";

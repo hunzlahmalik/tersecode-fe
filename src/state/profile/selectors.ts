@@ -20,5 +20,5 @@ export const selectProfileId = createSelector(
 
 export const selectProfileUsername = createSelector(
   selectProfile,
-  (profile) => profile.user.username
+  (profile) => profile.user && profile.user.username
 );

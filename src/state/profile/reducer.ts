@@ -9,19 +9,7 @@ export const initialState: ProfileState = {
   github: "",
   linkedin: "",
   country: "",
-  user: {
-    id: -1,
-    last_login: "",
-    is_superuser: false,
-    username: "",
-    first_name: "",
-    last_name: "",
-    is_staff: false,
-    date_joined: "",
-    email: "",
-    is_active: false,
-    groups: [],
-  },
+  user: null as unknown as any,
   error: null,
   isLoading: false,
 };
@@ -34,13 +22,8 @@ export const profileReducer = createReducer(initialState, (builder) => {
     .addCase(getProfile.fulfilled, (state, action) => {
       state.isLoading = false;
       if (action.payload.id) {
-        state.id = action.payload.id;
-        state.bio = action.payload.bio;
-        state.avatar = action.payload.avatar;
-        state.github = action.payload.github;
-        state.linkedin = action.payload.linkedin;
-        state.country = action.payload.country;
-        state.user = action.payload.user;
+        // eslint-disable-next-line no-param-reassign
+        state = { ...state, ...action.payload };
       } else {
         state.error = action.payload;
       }
@@ -55,12 +38,8 @@ export const profileReducer = createReducer(initialState, (builder) => {
     .addCase(updateProfile.fulfilled, (state, action) => {
       state.isLoading = false;
       if (action.payload.id) {
-        state.id = action.payload.id;
-        state.bio = action.payload.bio;
-        state.avatar = action.payload.avatar;
-        state.github = action.payload.github;
-        state.linkedin = action.payload.linkedin;
-        state.country = action.payload.country;
+        // eslint-disable-next-line no-param-reassign
+        state = { ...state, ...action.payload };
       } else {
         state.error = action.payload;
       }

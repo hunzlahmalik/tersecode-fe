@@ -5,12 +5,13 @@ import storage from "redux-persist/lib/storage";
 
 import { userReducer } from "./user/reducer";
 import { profileReducer } from "./profile/reducer";
-import { LOG_OUT } from "./actions";
+import { logOut } from "./actions";
+import { problemsReducer } from "./problems/reducer";
 
 const persistConfig = {
   key: "root",
-  whitelist: ["user", "problems"],
-  blacklist: ["profile"],
+  whitelist: ["user", "problems", "profile"],
+  blacklist: [],
   storage,
   version: 1,
 };
@@ -18,13 +19,13 @@ const persistConfig = {
 const appReducer = combineReducers({
   user: userReducer,
   profile: profileReducer,
+  problems: problemsReducer,
 });
 
 const rootReducer = (state: any, action: any) => {
-  if (action.type === LOG_OUT.type) {
+  if (action.type === logOut.type) {
     // eslint-disable-next-line no-param-reassign
     state = undefined;
-    console.log("LOG_OUT");
   }
 
   return appReducer(state, action);
