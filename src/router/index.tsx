@@ -25,6 +25,8 @@ const Logout = Loader(lazy(() => import("pages/Logout")));
 const Profile = Loader(lazy(() => import("pages/Profile")));
 const ProfileSetting = Loader(lazy(() => import("pages/ProfileSetting")));
 const Problems = Loader(lazy(() => import("pages/Problems")));
+const Submissions = Loader(lazy(() => import("pages/Submissions")));
+
 // Dashboards
 
 const Tasks = Loader(lazy(() => import("content/dashboards/Tasks")));
@@ -108,7 +110,6 @@ const routes = [
           },
         ],
       },
-
       {
         path: "problems",
         element: <SidebarLayout />,
@@ -116,6 +117,16 @@ const routes = [
           {
             path: "",
             element: <Problems />,
+          },
+        ],
+      },
+      {
+        path: "submissions",
+        element: <SidebarLayout />,
+        children: [
+          {
+            path: "",
+            element: <Submissions />,
           },
         ],
       },

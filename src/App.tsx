@@ -55,6 +55,7 @@ export const App = () => {
         dispatch(getProfile({ username }));
       }, 1000);
     }
+    return () => {};
   }, [dispatch, isAuthenticated, profile, username]);
 
   return (

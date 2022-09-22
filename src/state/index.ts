@@ -3,14 +3,15 @@ import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+import { logOut } from "./actions";
 import { userReducer } from "./user/reducer";
 import { profileReducer } from "./profile/reducer";
-import { logOut } from "./actions";
 import { problemsReducer } from "./problems/reducer";
+import { submissionsReducer } from "./submissions/reducer";
 
 const persistConfig = {
   key: "root",
-  whitelist: ["user", "problems", "profile"],
+  whitelist: ["user", "problems", "profile", "submissions"],
   blacklist: [],
   storage,
   version: 1,
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
   user: userReducer,
   profile: profileReducer,
   problems: problemsReducer,
+  submissions: submissionsReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

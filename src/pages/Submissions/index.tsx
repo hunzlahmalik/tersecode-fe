@@ -3,13 +3,13 @@ import PageTitleWrapper from "components/PageTitleWrapper";
 import { Grid, Container, Card } from "@mui/material";
 import Footer from "components/Footer";
 import PageHeader from "./PageHeader";
-import ProblemsTable from "./ProblemsTable";
+import SubmissionsTable from "./SubmissionsTable";
 
-const Problems = () => {
+const Submissions = () => {
   return (
     <>
       <Helmet>
-        <title>Problems - Tersecode</title>
+        <title>Submissions - Tersecode</title>
       </Helmet>
       <PageTitleWrapper>
         <PageHeader />
@@ -24,7 +24,7 @@ const Problems = () => {
         >
           <Grid item xs={12}>
             <Card>
-              <ProblemsTable />
+              <SubmissionsTable />
             </Card>
           </Grid>
         </Grid>
@@ -34,4 +34,4 @@ const Problems = () => {
   );
 };
 
-export default Problems;
+export default Submissions;
