@@ -239,10 +239,10 @@ export const NebulaFighterTheme = createTheme({
     menuItemIconColorActive: colors.layout.sidebar.menuItemIconColorActive,
     menuItemHeadingColor: colors.layout.sidebar.menuItemHeadingColor,
     boxShadow: "1px 0 0 #272C48",
-    width: "290px",
+    width: "270px",
   },
   header: {
-    height: "80px",
+    height: "70px",
     background: themeColors.primaryAlt,
     boxShadow: "0px 1px 0px #272C48",
     textColor: colors.secondary.main,

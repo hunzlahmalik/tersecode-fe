@@ -25,6 +25,7 @@ const Logout = Loader(lazy(() => import("pages/Logout")));
 const Profile = Loader(lazy(() => import("pages/Profile")));
 const ProfileSetting = Loader(lazy(() => import("pages/ProfileSetting")));
 const Problems = Loader(lazy(() => import("pages/Problems")));
+const ProblemDetail = Loader(lazy(() => import("pages/ProblemDetail")));
 const Submissions = Loader(lazy(() => import("pages/Submissions")));
 
 // Dashboards
@@ -117,6 +118,10 @@ const routes = [
           {
             path: "",
             element: <Problems />,
+          },
+          {
+            path: ":id",
+            element: <ProblemDetail />,
           },
         ],
       },

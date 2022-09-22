@@ -12,3 +12,12 @@ export const fetchProblems = async ({
   });
   return data;
 };
+
+export const fetchStatement = async ({ link }: { link: string }) => {
+  const { data } = await axios.get<string>(link, {
+    baseURL: "",
+  });
+  return data;
+};
+
+export const fetchSolution = fetchStatement;
