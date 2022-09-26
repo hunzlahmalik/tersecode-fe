@@ -1,3 +1,4 @@
+export const SERVER_URL = "http://localhost:8000";
 export const API = "http://localhost:8000/api/v1";
 export const LOGIN_EP = "token/";
 export const SIGNUP_EP = "users/signup/";

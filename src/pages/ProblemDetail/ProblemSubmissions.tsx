@@ -22,6 +22,7 @@ export interface ProblemSubmissionsProps {
 }
 
 const getStatusLabel = (status: SubmissionStatus): JSX.Element => {
+  if (!status) return null as unknown as any;
   const map: Record<SubmissionStatus, { color: string }> = {
     Accepted: {
       color: "success",
@@ -97,7 +98,11 @@ export const ProblemSubmissions = ({
                   </TableCell>
                   {/* status */}
                   <TableCell align="right">
-                    {getStatusLabel(submission.status)}
+                    {getStatusLabel(
+                      submission.analytics && submission.analytics.status
+                        ? submission.analytics.status
+                        : "Pending"
+                    )}
                     <Typography variant="body2" color="text.secondary" noWrap>
                       {format(
                         new Date(submission.timestamp),

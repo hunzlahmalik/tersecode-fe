@@ -19269,6 +19269,7 @@ __metadata:
     eslint-plugin-storybook: ^0.6.4
     husky: ^8.0.0
     jose: ^4.9.3
+    lodash: ^4.17.21
     markdown-to-jsx: ^7.1.7
     mui-markdown: ^0.5.5
     nprogress: ^0.2.0

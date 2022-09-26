@@ -1,4 +1,4 @@
-import { ErrorResponse, Problem } from "types";
+import { Discussion, ErrorResponse, Problem } from "types";
 
 export interface ProblemsState {
   problems: {
@@ -17,3 +17,4 @@ export interface ProblemsResponse extends ErrorResponse {
 }
 
 export interface ProblemResponse extends Problem, ErrorResponse {}
+export interface DiscussionResponse extends Discussion, ErrorResponse {}

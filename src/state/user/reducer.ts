@@ -64,5 +64,7 @@ export const userReducer = createReducer(initialState, (builder) => {
     .addCase(refreshToken.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error;
+      // eslint-disable-next-line no-param-reassign
+      state = undefined as unknown as any;
     });
 });

@@ -1,6 +1,11 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { Problem } from "types";
-import { getProblem, getProblems, addProblems } from "./actions";
+import {
+  getProblem,
+  getProblems,
+  postProblemDiscussion,
+  addProblems,
+} from "./actions";
 import { ProblemsState } from "./types";
 
 export const initialState: ProblemsState = {
@@ -34,6 +39,17 @@ export const problemsReducer = createReducer(initialState, (builder) => {
       });
     })
     .addCase(getProblems.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message as string;
+    })
+    .addCase(postProblemDiscussion.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(postProblemDiscussion.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.problems[action.payload.problem].discussion.push(action.payload);
+    })
+    .addCase(postProblemDiscussion.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message as string;
     })

@@ -94,11 +94,12 @@ export interface SubmissionAnalytics {
   submission: number;
   runtime: number;
   memory: number;
+  status: SubmissionStatus;
+  result: object;
 }
 
 export interface Submission {
   id: number;
-  status: SubmissionStatus;
   code: string;
   timestamp: string;
   user: number;

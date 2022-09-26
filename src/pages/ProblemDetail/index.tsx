@@ -2,11 +2,19 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useAppDispatch, useAppSelector } from "state";
 import { Navigate, useParams } from "react-router-dom";
-import { getProblemWithToast } from "state/problems/actions";
+import {
+  getProblemWithToast,
+  postProblemDiscussionWithToast,
+} from "state/problems/actions";
 import { selectProblemById } from "state/problems/selectors";
 import { fetchSolution, fetchStatement } from "state/problems/helper";
-import { addSubmissions } from "state/submissions/actions";
+import {
+  addSubmissions,
+  postSubmissionWithToast,
+} from "state/submissions/actions";
 import { fetchAllSubmissions } from "state/submissions/helper";
+import { selectProfile } from "state/profile/selectors";
+
 import { toast } from "react-toastify";
 import {
   Grid,
@@ -17,6 +25,11 @@ import {
   Button,
   Divider,
   Typography,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
 } from "@mui/material";
 import {
   EmojiObjectsTwoTone,
@@ -32,20 +45,28 @@ import { ProblemEditor } from "./ProblemEditor";
 import { ProblemStatement } from "./ProblemStatement";
 import { ProblemSolution } from "./ProblemSolution";
 import { ProblemSubmissions } from "./ProblemSubmissions";
+import { ProblemDiscussion } from "./ProblemDiscussion";
 
 const CustomTabPanel = ({ children, ...props }: TabPanelProps) => {
   return (
     <TabPanel
       sx={{
-        padding: 1,
-        paddingTop: 3,
-        maxHeight: "80vh",
-        overflow: "scroll",
+        padding: 0,
+        maxHeight: "calc(100vh - 200px)",
+        overflowY: "auto",
       }}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     >
+      {/* <Box
+        padding={1}
+        paddingTop={3}
+        height="80%"
+        sx={{ overflow: "scroll", maxHeight: "80vh", width: "100%" }}
+        overflow="scroll"
+      > */}
       {children}
+      {/* </Box> */}
     </TabPanel>
   );
 };
@@ -64,8 +85,10 @@ const Problems = () => {
   const [solution, setSolution] = useState<string | null>(null);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [isFailed, setIsFailed] = useState(false);
+  const [language, setLanguage] = useState("1");
 
   const problem = useAppSelector(selectProblemById(parseInt(id || "0", 10)));
+  const profile = useAppSelector(selectProfile);
 
   useEffect(() => {
     if (!problem && id) {
@@ -87,7 +110,9 @@ const Problems = () => {
   // useEffect for previous submissions
   useEffect(() => {
     if (problem && tab === SUBMISSION_TAB) {
-      const promise = fetchAllSubmissions({ params: { problem: problem.id } });
+      const promise = fetchAllSubmissions({
+        params: { problem: problem.id, ordering: "-timestamp" },
+      });
       toast.promise(promise, {
         pending: "Loading Submissions",
         error: "Error Loading Submissions",
@@ -141,6 +166,23 @@ const Problems = () => {
     return <SuspenseLoader />;
   }
 
+  const onAddMessage = (discussion: string) => {
+    return postProblemDiscussionWithToast(dispatch, {
+      discussion,
+      id: problem.id,
+    });
+  };
+
+  const onCodeSubmit = () => {
+    if (code) {
+      postSubmissionWithToast(dispatch, {
+        code,
+        problem: problem.id,
+        language: parseInt(language, 10),
+      });
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -159,7 +201,9 @@ const Problems = () => {
           <Grid item xs={12} md={6}>
             <Box sx={{ width: "100%", typography: "body1" }}>
               <TabContext value={tab}>
-                <Box sx={{ borderBottom: 0, overflow: "auto" }}>
+                <Box
+                  sx={{ borderBottom: 0, overflow: "auto", paddingBottom: 2 }}
+                >
                   <TabList
                     onChange={(e, v) => {
                       setTab(v);
@@ -211,7 +255,11 @@ const Problems = () => {
                   )}
                 </CustomTabPanel>
                 <CustomTabPanel value={DISCUSSION_TAB}>
-                  Item Three
+                  <ProblemDiscussion
+                    discussions={problem.discussion}
+                    profile={profile}
+                    onAddDiscussion={onAddMessage}
+                  />
                 </CustomTabPanel>
                 <CustomTabPanel value={SUBMISSION_TAB}>
                   <ProblemSubmissions submissions={submissions} />
@@ -220,8 +268,39 @@ const Problems = () => {
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Box sx={{ overflow: "scroll", width: "100%", maxHeight: "85vh" }}>
-              <ProblemEditor value={code} setValue={setCode} />
+            <Box height="100%" sx={{ overflow: "scroll", width: "100%" }}>
+              <ProblemEditor
+                height="calc(100vh - 190px)"
+                value={code}
+                setValue={setCode}
+              />
+              <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
+              {/* <Box flex={1} flexDirection="column"> */}
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onCodeSubmit}
+              >
+                Submit
+              </Button>
+              {"    Language:  "}
+              <FormControl>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                >
+                  <FormControlLabel value="1" control={<Radio />} label="C++" />
+                  <FormControlLabel
+                    value="2"
+                    control={<Radio />}
+                    label="Python"
+                  />
+                </RadioGroup>
+              </FormControl>
+              {/* </Box> */}
             </Box>
           </Grid>
         </Grid>

@@ -4,6 +4,7 @@ import { useAppDispatch } from "state";
 import { addSubmissions } from "state/submissions/actions";
 import { fetchSubmissions } from "state/submissions/helper";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
 import {
   Tooltip,
   Divider,
@@ -217,7 +218,17 @@ const SubmissionsTable = () => {
                   </TableCell>
                   {/* status */}
                   <TableCell align="right">
-                    {getStatusLabel(submission.status)}
+                    {getStatusLabel(
+                      submission.analytics && submission.analytics.status
+                        ? submission.analytics.status
+                        : "Pending"
+                    )}
+                    <Typography variant="body2" color="text.secondary" noWrap>
+                      {format(
+                        new Date(submission.timestamp),
+                        "dd MMM yyyy hh:mm a"
+                      )}
+                    </Typography>
                   </TableCell>
                   {/* analytics */}
                   <TableCell align="right">

@@ -269,6 +269,7 @@ const ProblemsTable = () => {
                         }}
                         color="inherit"
                         size="small"
+                        href={`/problems/${problem.id}`}
                       >
                         <TerminalTwoTone fontSize="large" />
                       </IconButton>

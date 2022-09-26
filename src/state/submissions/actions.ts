@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "config/axios";
 import { withToast } from "state/utils";
-import { PROBLEM_EP } from "constants/endpoints";
+import { PROBLEM_EP, SUBMISSION_EP } from "constants/endpoints";
 import { Submission } from "types";
 import { fetchSubmissions } from "./helper";
 import { SubmissionResponse } from "./types";
@@ -19,6 +19,39 @@ export const getSubmissions = createAsyncThunk(
   fetchSubmissions
 );
 
+export const postSubmission = createAsyncThunk(
+  "submissions/postSubmission",
+  async ({
+    problem,
+    code,
+    language,
+  }: {
+    problem: number;
+    code: string;
+    language: number;
+  }): Promise<SubmissionResponse> => {
+    const formData = new FormData();
+    formData.append("problem", problem.toString());
+    formData.append("language", language.toString());
+    formData.append(
+      "code",
+      new Blob([code], { type: "text/plain" }),
+      "code.py"
+    );
+
+    const { data } = await axios.post<SubmissionResponse>(
+      SUBMISSION_EP,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return data;
+  }
+);
+
 export const addSubmissions = createAction<Submission[]>(
   "submissions/addSubmissions"
 );
@@ -33,4 +66,10 @@ export const getSubmissionsWithToast = withToast(getSubmissions, {
   pending: "Loading submissions...",
   success: "Submissions fetched successfully",
   error: "Submissions fetch failed",
+});
+
+export const postSubmissionWithToast = withToast(postSubmission, {
+  pending: "Submitting...",
+  success: "Code Submitted Successfully",
+  error: "Code Submission failed",
 });

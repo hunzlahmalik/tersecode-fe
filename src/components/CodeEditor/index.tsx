@@ -10,7 +10,7 @@ export type CodeEditorProps = ReactCodeMirrorProps & {
 export const CodeEditor = ({ value, setValue, ...props }: CodeEditorProps) => {
   return (
     <ReactCodeMirror
-      height="85vh"
+      height="100%"
       value={value}
       onChange={(_value) => setValue(_value)}
       extensions={[python(), cpp()]}
