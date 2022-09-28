@@ -1,5 +1,6 @@
-export const SERVER_URL = "http://localhost:8000";
-export const API = "http://localhost:8000/api/v1";
+export const SERVER_URL =
+  process.env.REACT_APP_SERVER_URL || "http://localhost:8000";
+export const API = `${SERVER_URL}/api/v1`;
 export const LOGIN_EP = "token/";
 export const SIGNUP_EP = "users/signup/";
 export const TOK_REFRESH_EP = "token/refresh/";
