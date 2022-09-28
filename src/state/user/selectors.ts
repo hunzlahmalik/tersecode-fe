@@ -13,8 +13,8 @@ export const selectUserError = createSelector(selectUser, (user) => user.error);
 export const selectUserIsAuthenticated = createSelector(
   selectUser,
   (user) =>
-    !!user.access &&
-    !!user.refresh &&
+    user.access &&
+    user.refresh &&
     user.access.length > 0 &&
     user.refresh.length > 0 &&
     user.id > 0
@@ -36,3 +36,5 @@ export const selectUserUsername = createSelector(
   selectUser,
   (user) => user.username
 );
+
+export const selectUserExp = createSelector(selectUser, (user) => user.exp);

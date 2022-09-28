@@ -4,6 +4,7 @@ import { ErrorResponse } from "types";
 export interface UserState {
   id: number;
   username: string;
+  exp: number;
   refresh: string;
   access: string;
   isLoading: boolean;

@@ -5,6 +5,7 @@ import { UserState } from "./types";
 
 export const initialState: UserState = {
   id: -1,
+  exp: 0,
   username: "",
   refresh: "",
   access: "",
@@ -25,9 +26,11 @@ export const userReducer = createReducer(initialState, (builder) => {
         const decoded = decodeJwt(action.payload.access) as JWTPayload & {
           user_id: number;
           username: string;
+          exp: number;
         };
         state.id = decoded.user_id;
         state.username = decoded.username;
+        state.exp = decoded.exp;
       } else {
         state.error = action.payload;
       }
