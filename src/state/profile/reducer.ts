@@ -36,6 +36,10 @@ export const profileReducer = createReducer(initialState, (builder) => {
     .addCase(getProfile.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error;
+      console.warn(action.error);
+      // eslint-disable-next-line no-param-reassign
+      state = undefined as unknown as any;
+      state.error = action.error;
     })
     .addCase(updateProfile.pending, (state) => {
       state.isLoading = true;
@@ -49,6 +53,7 @@ export const profileReducer = createReducer(initialState, (builder) => {
         state.github = action.payload.github;
         state.linkedin = action.payload.linkedin;
         state.country = action.payload.country;
+        state.user = action.payload.user;
       } else {
         state.error = action.payload;
       }
