@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { signUpWithToast } from "state/user/actions";
 import { useAppDispatch, useAppSelector } from "state";
 import {
@@ -276,6 +276,19 @@ const SignUp = () => {
                   </CardContent>
                 </Card>
               </Grid>
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="body2" color="text.secondary">
+                  Already have account?{" "}
+                  <Button
+                    variant="text"
+                    color="primary"
+                    component={NavLink}
+                    to="/login"
+                  >
+                    Login
+                  </Button>
+                </Typography>
+              </Box>
             </Grid>
           </Container>
         </Card>

@@ -14,7 +14,6 @@ import {
   styled,
   InputBase,
   useTheme,
-  Grid,
 } from "@mui/material";
 import { Discussion, Profile } from "types";
 import { SERVER_URL } from "constants/endpoints";

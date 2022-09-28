@@ -130,6 +130,8 @@ export const ProblemSubmissions = ({
                         }}
                         color="inherit"
                         size="small"
+                        component={NavLink}
+                        to={`/submissions/${submission.id}`}
                       >
                         <LaunchTwoTone fontSize="medium" />
                       </IconButton>

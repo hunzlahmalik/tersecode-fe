@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Footer from "components/Footer";
-
+import { axios } from "config/axios";
 import { Grid, Container } from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "state";
@@ -10,11 +10,15 @@ import { selectProfile } from "state/profile/selectors";
 import { ProfileCover } from "components/ProfileCover";
 import { selectUserIsAuthenticated } from "state/user/selectors";
 import { updateProfileWithToast } from "state/profile/actions";
+import { DayCount } from "types";
+import { SUBMISSION_EP } from "constants/endpoints";
 import RecentActivity from "./RecentActivity";
+import { Heatmap } from "./Heatmap";
 
 const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [dayCount, setDayCount] = useState<DayCount | null>(null);
   const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
 
   useEffect(() => {
@@ -31,6 +35,14 @@ const Profile = () => {
       username: profile.user.username,
     });
   };
+
+  useEffect(() => {
+    if (profile && !dayCount) {
+      axios.get<DayCount>(`${SUBMISSION_EP}daycount/`).then((res) => {
+        setDayCount(res.data);
+      });
+    }
+  }, [dayCount, profile]);
 
   return (
     <>
@@ -54,6 +66,9 @@ const Profile = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <RecentActivity />
+          </Grid>
+          <Grid item xs={12}>
+            {dayCount && <Heatmap data={dayCount} />}
           </Grid>
           {/* <Grid item xs={12} md={8}>
             <Feed />

@@ -250,6 +250,8 @@ const SubmissionsTable = () => {
                         }}
                         color="inherit"
                         size="small"
+                        component={NavLink}
+                        to={`/submissions/${submission.id}`}
                       >
                         <LaunchTwoTone fontSize="medium" />
                       </IconButton>

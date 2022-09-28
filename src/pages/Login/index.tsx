@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { loginWithToast } from "state/user/actions";
 import { useAppDispatch, useAppSelector } from "state";
 import {
@@ -21,11 +21,7 @@ import {
 import { AccountCircle, PasswordRounded } from "@mui/icons-material";
 
 import Logo from "components/LogoSign";
-import {
-  selectUserIsAuthenticated,
-  selectUserUsername,
-} from "state/user/selectors";
-import { getProfileWithToast } from "state/profile/actions";
+import { selectUserIsAuthenticated } from "state/user/selectors";
 
 const OverviewWrapper = styled(Box)(
   () => `
@@ -44,8 +40,16 @@ const TypographyH1 = styled(Typography)(
 
 const Login = () => {
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
+
+  const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
   const [values, setValues] = useState({
     email: {
       value: "",
@@ -58,18 +62,6 @@ const Login = () => {
       helperText: "",
     },
   });
-
-  const username = useAppSelector(selectUserUsername);
-  const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      getProfileWithToast(dispatch, { username });
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    }
-  }, [dispatch, isAuthenticated, navigate, username]);
 
   const validateValues = (data: typeof values) => {
     const valuesCopy = {
@@ -113,7 +105,6 @@ const Login = () => {
 
   const handleSubmit = () => {
     if (validateValues(values)) {
-      console.info("login");
       loginWithToast(dispatch, {
         email: values.email.value,
         password: values.password.value,
@@ -167,7 +158,7 @@ const Login = () => {
                           type="email"
                           label="Email"
                           value={values.email.value}
-                          onChange={(event) => {
+                          onChange={(event: { target: { value: any } }) => {
                             const newData = {
                               ...values,
                               email: {
@@ -210,7 +201,7 @@ const Login = () => {
                           //   </InputAdornment>
                           // }
                           value={values.password.value}
-                          onChange={(event) => {
+                          onChange={(event: { target: { value: any } }) => {
                             const newData = {
                               ...values,
                               password: {
@@ -240,6 +231,19 @@ const Login = () => {
                     </Box>
                   </CardContent>
                 </Card>
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    Do not have an account?{" "}
+                    <Button
+                      variant="text"
+                      color="primary"
+                      component={NavLink}
+                      to="/signup"
+                    >
+                      Sign up
+                    </Button>
+                  </Typography>
+                </Box>
               </Grid>
             </Grid>
           </Container>
