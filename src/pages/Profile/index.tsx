@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Footer from "components/Footer";
 import { axios } from "config/axios";
@@ -8,7 +7,6 @@ import { Grid, Container } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "state";
 import { selectProfile } from "state/profile/selectors";
 import { ProfileCover } from "components/ProfileCover";
-import { selectUserIsAuthenticated } from "state/user/selectors";
 import { updateProfileWithToast } from "state/profile/actions";
 import { DayCount } from "types";
 import { SUBMISSION_EP } from "constants/endpoints";
@@ -16,16 +14,8 @@ import RecentActivity from "./RecentActivity";
 import { Heatmap } from "./Heatmap";
 
 const Profile = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [dayCount, setDayCount] = useState<DayCount | null>(null);
-  const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [isAuthenticated, navigate]);
 
   const profile = useAppSelector(selectProfile);
 
