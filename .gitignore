@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 temp
+.yarn.lock
 
 # testing
 /coverage
