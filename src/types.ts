@@ -95,7 +95,7 @@ export interface SubmissionAnalytics {
   runtime: number;
   memory: number;
   status: SubmissionStatus;
-  result: object;
+  result: string;
 }
 
 export interface Submission {
@@ -107,3 +107,32 @@ export interface Submission {
   language: number;
   analytics: SubmissionAnalytics | null;
 }
+
+export interface CountNext {
+  count: number;
+  next: string | null;
+  previous: string | null;
+}
+
+export type DayCount = {
+  day: string;
+  count: number;
+  accepted: number;
+}[];
+
+export type MonthCount = {
+  month: string;
+  count: number;
+  accepted: number;
+}[];
+
+export type ProblemStats = {
+  total: number;
+  accepted: number;
+}[];
+
+export type ProblemSubmissionStats = {
+  accepted: number;
+  day: string;
+  count: number;
+}[];

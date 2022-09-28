@@ -98,7 +98,7 @@ const LogoText = styled(Box)(
 
 const Logo = () => {
   return (
-    <LogoWrapper to="/overview">
+    <LogoWrapper to="/">
       <LogoSignWrapper>
         <LogoSign>
           <LogoSignInner />
@@ -112,9 +112,9 @@ const Logo = () => {
       >
         <LogoTextWrapper>
           <Tooltip title="Version 2.0" arrow placement="right">
-            <VersionBadge>2.0</VersionBadge>
+            <VersionBadge>1.0</VersionBadge>
           </Tooltip>
-          <LogoText>Tokyo Free Black</LogoText>
+          <LogoText>Tersecode</LogoText>
         </LogoTextWrapper>
       </Box>
     </LogoWrapper>

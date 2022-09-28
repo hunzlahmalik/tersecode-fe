@@ -99,10 +99,7 @@ const Logo = () => {
   const theme = useTheme();
 
   return (
-    <TooltipWrapper
-      title="Tokyo Free Black React Typescript Admin Dashboard"
-      arrow
-    >
+    <TooltipWrapper title="Tersecode" arrow>
       <LogoWrapper to="/overview">
         <Badge
           sx={{
@@ -114,7 +111,7 @@ const Logo = () => {
           }}
           overlap="circular"
           color="success"
-          badgeContent="2.0"
+          badgeContent="1.0"
         >
           <LogoSignWrapper>
             <LogoSign>

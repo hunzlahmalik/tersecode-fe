@@ -2,7 +2,6 @@ import axiosRaw from "axios";
 import { API } from "constants/endpoints";
 import store from "state";
 import { logOut } from "state/actions";
-import { refreshTokenWithToast } from "state/user/actions";
 
 const axios = axiosRaw.create({
   baseURL: `${API}/`,
@@ -39,28 +38,30 @@ export const removeJwtInterceptor = () => {
 export const refreshInterceptor = axios.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response.status === 401) {
-      // store.dispatch({ type: "LOGOUT" });
+    if (error && error.response && error.response.status === 401) {
+      console.warn("401 error", error);
       if (
         error.response.data.code === "token_not_valid" &&
         !error.config?.sent
       ) {
-        console.error("token not valid");
-        // eslint-disable-next-line no-param-reassign
-        error.config.sent = true;
+        store.dispatch(logOut);
 
-        const promise = refreshTokenWithToast(store.dispatch, {
-          refresh: store.getState().user.refresh,
-        });
-        promise
-          .then(() => {
-            return axios.request(error.config);
-          })
-          .catch(() => {
-            store.dispatch(logOut);
-          });
+        // console.error("token not valid");
+        // // eslint-disable-next-line no-param-reassign
+        // error.config.sent = true;
 
-        // return axios(error.config);
+        // const promise = refreshTokenWithToast(store.dispatch, {
+        //   refresh: store.getState().user.refresh,
+        // });
+        // promise
+        //   .then(() => {
+        //     return axios.request(error.config);
+        //   })
+        //   .catch(() => {
+        //     store.dispatch(logOut);
+        //   });
+
+        // // return axios(error.config);
       }
     }
     return Promise.reject(error);
