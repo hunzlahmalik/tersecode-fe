@@ -21,7 +21,18 @@ const AvatarPrimary = styled(Avatar)(
 `
 );
 
-const RecentActivity = () => {
+export interface RecentActivityProps {
+  submissions: {
+    total: number;
+    accepted: number;
+  };
+  problems: {
+    total: number;
+    solved: number;
+  };
+}
+
+const RecentActivity = ({ submissions, problems }: RecentActivityProps) => {
   const theme = useTheme();
 
   return (
@@ -44,7 +55,7 @@ const RecentActivity = () => {
               >
                 Total
               </Typography>
-              <Typography variant="h2">485</Typography>
+              <Typography variant="h2">{submissions.total}</Typography>
             </Box>
             <Box>
               <Typography
@@ -54,7 +65,7 @@ const RecentActivity = () => {
               >
                 Failed
               </Typography>
-              <Typography variant="h2">8</Typography>
+              <Typography variant="h2">{submissions.accepted}</Typography>
             </Box>
           </Box>
         </Box>
@@ -76,7 +87,7 @@ const RecentActivity = () => {
               >
                 Attempted
               </Typography>
-              <Typography variant="h2">64</Typography>
+              <Typography variant="h2">{problems.total}</Typography>
             </Box>
             <Box>
               <Typography
@@ -86,7 +97,7 @@ const RecentActivity = () => {
               >
                 Solved
               </Typography>
-              <Typography variant="h2">15</Typography>
+              <Typography variant="h2">{problems.solved}</Typography>
             </Box>
           </Box>
         </Box>

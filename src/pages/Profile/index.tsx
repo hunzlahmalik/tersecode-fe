@@ -9,13 +9,19 @@ import { selectProfile } from "state/profile/selectors";
 import { ProfileCover } from "components/ProfileCover";
 import { updateProfileWithToast } from "state/profile/actions";
 import { DayCount } from "types";
-import { SUBMISSION_EP } from "constants/endpoints";
-import RecentActivity from "./RecentActivity";
+import { PROBLEM_EP, SUBMISSION_EP } from "constants/endpoints";
+import RecentActivity, { RecentActivityProps } from "./RecentActivity";
 import { Heatmap } from "./Heatmap";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const [dayCount, setDayCount] = useState<DayCount | null>(null);
+  const [submissions, setSubmissions] = useState<
+    RecentActivityProps["submissions"] | null
+  >(null);
+  const [problems, setProblems] = useState<
+    RecentActivityProps["problems"] | null
+  >(null);
 
   const profile = useAppSelector(selectProfile);
 
@@ -32,7 +38,21 @@ const Profile = () => {
         setDayCount(res.data);
       });
     }
-  }, [dayCount, profile]);
+    if (profile && !submissions) {
+      axios
+        .get<RecentActivityProps["submissions"]>(`${SUBMISSION_EP}userstats/`)
+        .then((res) => {
+          setSubmissions(res.data);
+        });
+    }
+    if (profile && !problems) {
+      axios
+        .get<RecentActivityProps["problems"]>(`${PROBLEM_EP}userstats/`)
+        .then((res) => {
+          setProblems(res.data);
+        });
+    }
+  }, [dayCount, problems, profile, submissions]);
 
   return (
     <>
@@ -55,23 +75,13 @@ const Profile = () => {
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <RecentActivity />
+            {submissions && problems && (
+              <RecentActivity submissions={submissions} problems={problems} />
+            )}
           </Grid>
           <Grid item xs={12}>
             {dayCount && <Heatmap data={dayCount} />}
           </Grid>
-          {/* <Grid item xs={12} md={8}>
-            <Feed />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <PopularTags />
-          </Grid>
-          <Grid item xs={12} md={7}>
-            <MyCards />
-          </Grid>
-          <Grid item xs={12} md={5}>
-            <Addresses />
-          </Grid> */}
         </Grid>
       </Container>
       <Footer />

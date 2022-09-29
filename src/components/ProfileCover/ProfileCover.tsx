@@ -80,12 +80,23 @@ export const ProfileCover = ({
         >
           <Box>
             {profile.github && profile.github.length > 0 && (
-              <Button size="small" variant="contained" startIcon={<GitHub />}>
+              <Button
+                size="small"
+                variant="contained"
+                startIcon={<GitHub />}
+                href={profile.github}
+              >
                 Github
               </Button>
             )}
             {profile.linkedin && profile.linkedin.length > 0 && (
-              <Button size="small" variant="contained" startIcon={<LinkedIn />}>
+              <Button
+                sx={{ ml: 2 }}
+                size="small"
+                variant="contained"
+                startIcon={<LinkedIn />}
+                href={profile.linkedin}
+              >
                 LinkedIn
               </Button>
             )}
@@ -95,6 +106,7 @@ export const ProfileCover = ({
             size="small"
             variant="text"
             endIcon={<ArrowForwardTwoTone />}
+            href="/profile/settings"
           >
             Settings
           </Button>
