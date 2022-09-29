@@ -291,12 +291,16 @@ const Problems = () => {
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
                 >
-                  <FormControlLabel value="1" control={<Radio />} label="C++" />
                   <FormControlLabel
-                    value="2"
+                    value="1"
                     control={<Radio />}
                     label="Python"
                   />
+                  {/* <FormControlLabel
+                    value="2"
+                    control={<Radio />}
+                    label="Python"
+                  /> */}
                 </RadioGroup>
               </FormControl>
               {/* </Box> */}
