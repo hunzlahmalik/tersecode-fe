@@ -9,6 +9,8 @@ export const Heatmap = ({ data }: { data: DayCount }) => {
     count: day.count,
   }));
 
+  console.log(chartData);
+
   return (
     <Box width="100%">
       <CalendarHeatmap
@@ -24,12 +26,12 @@ export const Heatmap = ({ data }: { data: DayCount }) => {
           if (value.count === 0) {
             return "color-empty";
           }
-          if (value.count > 30) return "color-github-5";
-          if (value.count > 20) return "color-github-4";
-          if (value.count > 10) return "color-github-3";
-          if (value.count > 4) return "color-github-2";
-          if (value.count > 2) return "color-github-1";
-          if (value.count > 0) return "color-github-0";
+          if (value.count > 30) return "color-github-6";
+          if (value.count > 20) return "color-github-5";
+          if (value.count > 10) return "color-github-4";
+          if (value.count > 4) return "color-github-3";
+          if (value.count > 2) return "color-github-2";
+          if (value.count > 0) return "color-github-1";
           return "color-empty";
         }}
         tooltipDataAttrs={(value: { date: Date; count: number } | null) => {
