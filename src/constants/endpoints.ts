@@ -1,5 +1,5 @@
 export const SERVER_URL =
-  process.env.REACT_APP_SERVER_URL || "http://0.0.0.0:8000";
+  process.env.REACT_APP_SERVER_URL || "http://18.181.252.139:8000";
 export const API = `${SERVER_URL}/api/v1`;
 export const LOGIN_EP = "token/";
 export const SIGNUP_EP = "users/signup/";
