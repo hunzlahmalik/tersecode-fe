@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useAppDispatch, useAppSelector } from "state";
 import { Navigate, useParams } from "react-router-dom";
+import { axios } from "config/axios";
 import {
   getProblemWithToast,
   postProblemDiscussionWithToast,
@@ -39,7 +40,7 @@ import {
 import { TabContext, TabList, TabPanel, TabPanelProps } from "@mui/lab";
 import SuspenseLoader from "components/SuspenseLoader";
 import im404 from "assets/images/status/404.svg";
-import { Submission } from "types";
+import { Language, Submission } from "types";
 import { ProblemEditor } from "./ProblemEditor";
 import { ProblemStatement } from "./ProblemStatement";
 import { ProblemSolution } from "./ProblemSolution";
@@ -83,6 +84,7 @@ const Problems = () => {
   const [statement, setStatement] = useState<string | null>(null);
   const [solution, setSolution] = useState<string | null>(null);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [languages, setLanguages] = useState<Language[]>([]);
   const [isFailed, setIsFailed] = useState(false);
   const [language, setLanguage] = useState("1");
 
@@ -103,6 +105,12 @@ const Problems = () => {
       fetchSolution({ link: problem.solution.solution }).then((res) =>
         setSolution(res)
       );
+    }
+    if (problem && !languages.length) {
+      axios.get("problems/languages/").then((res) => {
+        setLanguages(res.data);
+        setLanguage(res.data[0].id.toString());
+      });
     }
   }, [dispatch, id, problem, solution, statement]);
 
@@ -178,6 +186,9 @@ const Problems = () => {
         code,
         problem: problem.id,
         language: parseInt(language, 10),
+        extension:
+          languages.find((l) => l.id === parseInt(language, 10))?.extension ||
+          "py",
       });
     }
   };
@@ -281,28 +292,28 @@ const Problems = () => {
                 onClick={onCodeSubmit}
               >
                 Submit
-              </Button>
-              {"    Language:  "}
-              <FormControl>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                >
-                  <FormControlLabel
-                    value="1"
-                    control={<Radio />}
-                    label="Python"
-                  />
-                  {/* <FormControlLabel
-                    value="2"
-                    control={<Radio />}
-                    label="Python"
-                  /> */}
-                </RadioGroup>
-              </FormControl>
+              </Button>{" "}
+              {"    Language:  "}{" "}
+              {languages.length > 0 && (
+                <FormControl>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                  >
+                    {languages.map((lang) => (
+                      <FormControlLabel
+                        key={lang.id}
+                        value={lang.id.toString()}
+                        control={<Radio />}
+                        label={lang.name.toUpperCase()}
+                      />
+                    ))}
+                  </RadioGroup>
+                </FormControl>
+              )}
               {/* </Box> */}
             </Box>
           </Grid>

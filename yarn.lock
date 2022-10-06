@@ -1716,6 +1716,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codemirror/lang-javascript@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@codemirror/lang-javascript@npm:6.1.0"
+  dependencies:
+    "@codemirror/autocomplete": ^6.0.0
+    "@codemirror/language": ^6.0.0
+    "@codemirror/lint": ^6.0.0
+    "@codemirror/state": ^6.0.0
+    "@codemirror/view": ^6.0.0
+    "@lezer/common": ^1.0.0
+    "@lezer/javascript": ^1.0.0
+  checksum: 7101ff1cc2c275b4e19626ffeba7bdff7799d2ed7d3a7d6cbc03d61035930c49d8b800c7ba3658f17c69e264b78f0ee32fb5633fe088711e4dd3847f11c5d928
+  languageName: node
+  linkType: hard
+
 "@codemirror/lang-python@npm:^6.0.1":
   version: 6.0.2
   resolution: "@codemirror/lang-python@npm:6.0.2"
@@ -2687,6 +2702,16 @@ __metadata:
   dependencies:
     "@lezer/common": ^1.0.0
   checksum: bb3ac30bc5267a50d7d061dc82e3effc216a0ae1ae5b72e4c44204de9c9017625efa349f6244211cbbbadd606f32180833db1e1afd45116c5d0f933e4e34b1bb
+  languageName: node
+  linkType: hard
+
+"@lezer/javascript@npm:^1.0.0":
+  version: 1.0.2
+  resolution: "@lezer/javascript@npm:1.0.2"
+  dependencies:
+    "@lezer/highlight": ^1.0.0
+    "@lezer/lr": ^1.0.0
+  checksum: d828da05afaf28cb14e97ae83b354db15cc0e945318924c3c3a050da45168d6c2f94d6c3404a2ac93b299716bcb0854b281d5435e2d5f40a412470212f3ae972
   languageName: node
   linkType: hard
 
@@ -19501,6 +19526,7 @@ __metadata:
   resolution: "tersecode-fe@workspace:."
   dependencies:
     "@codemirror/lang-cpp": ^6.0.1
+    "@codemirror/lang-javascript": ^6.1.0
     "@codemirror/lang-python": ^6.0.1
     "@emotion/react": ^11.10.4
     "@emotion/styled": ^11.10.4

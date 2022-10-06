@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.1",
+    "@codemirror/lang-javascript": "^6.1.0",
     "@codemirror/lang-python": "^6.0.1",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",

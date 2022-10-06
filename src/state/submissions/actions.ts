@@ -25,10 +25,12 @@ export const postSubmission = createAsyncThunk(
     problem,
     code,
     language,
+    extension,
   }: {
     problem: number;
     code: string;
     language: number;
+    extension: string;
   }): Promise<SubmissionResponse> => {
     const formData = new FormData();
     formData.append("problem", problem.toString());
@@ -36,7 +38,7 @@ export const postSubmission = createAsyncThunk(
     formData.append(
       "code",
       new Blob([code], { type: "text/plain" }),
-      "code.py"
+      `code.${extension}`
     );
 
     const { data } = await axios.post<SubmissionResponse>(
