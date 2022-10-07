@@ -4,7 +4,7 @@ WORKDIR /frontend
 
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn ./.yarn
-RUN yarn
+RUN yarn install --immutable --immutable-cache --check-cache
 COPY . .
 ENV REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL
 ENV NODE_ENV production
