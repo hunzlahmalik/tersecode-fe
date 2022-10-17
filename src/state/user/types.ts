@@ -36,3 +36,14 @@ export interface SignUpAPIResponse extends ErrorResponse {
 export interface TokenRefreshResponse extends ErrorResponse {
   access: string;
 }
+
+export interface SignUpActionProps {
+  email: string;
+  password: string;
+  username: string;
+}
+
+export interface LoginActionProps {
+  email: string;
+  password: string;
+}

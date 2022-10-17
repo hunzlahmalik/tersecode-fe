@@ -9,6 +9,7 @@ import {
   Button,
   TextField,
   Avatar,
+  useTheme,
 } from "@mui/material";
 
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
@@ -21,6 +22,7 @@ import { selectProfile } from "state/profile/selectors";
 import { updateProfileWithToast } from "state/profile/actions";
 
 const EditProfile = () => {
+  const theme = useTheme();
   const profile = useAppSelector(selectProfile);
   const dispatch = useAppDispatch();
   const [isEditing, setIsEditing] = useState(false);
@@ -32,6 +34,8 @@ const EditProfile = () => {
     github: profile.github,
     linkedin: profile.linkedin,
   });
+
+  const txtcolor = theme.palette.mode === "dark" ? "black" : "secondary";
 
   const handleChange = (key: keyof typeof data, value: string) => {
     setData((prev) => ({ ...prev, [key]: value }));
@@ -108,7 +112,7 @@ const EditProfile = () => {
                       }
                     />
                   ) : (
-                    <Text color="black">
+                    <Text color={txtcolor}>
                       <b>{data.first_name}</b>
                     </Text>
                   )}
@@ -130,7 +134,7 @@ const EditProfile = () => {
                       }
                     />
                   ) : (
-                    <Text color="black">
+                    <Text color={txtcolor}>
                       <b>{data.last_name}</b>
                     </Text>
                   )}
@@ -151,7 +155,7 @@ const EditProfile = () => {
                     />
                   ) : (
                     <Box sx={{ maxWidth: { xs: "auto", sm: 300 } }}>
-                      <Text color="black">{data.bio}</Text>
+                      <Text color={txtcolor}>{data.bio}</Text>
                     </Box>
                   )}
                 </Grid>
@@ -169,7 +173,7 @@ const EditProfile = () => {
                       onChange={(e) => handleChange("github", e.target.value)}
                     />
                   ) : (
-                    <Text color="black">
+                    <Text color={txtcolor}>
                       <b>{data.github}</b>
                     </Text>
                   )}
@@ -188,7 +192,7 @@ const EditProfile = () => {
                       onChange={(e) => handleChange("linkedin", e.target.value)}
                     />
                   ) : (
-                    <Text color="black">
+                    <Text color={txtcolor}>
                       <b>{data.linkedin}</b>
                     </Text>
                   )}
@@ -255,7 +259,7 @@ const EditProfile = () => {
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
-                  <Text color="black">
+                  <Text color={txtcolor}>
                     <b>{profile.user.email}</b>
                   </Text>
                   <Box pl={1} component="span">
@@ -268,7 +272,7 @@ const EditProfile = () => {
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
-                  <Text color="black">
+                  <Text color={txtcolor}>
                     <b>{profile.user.username}</b>
                   </Text>
                 </Grid>

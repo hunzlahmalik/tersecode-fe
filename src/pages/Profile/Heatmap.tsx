@@ -9,8 +9,6 @@ export const Heatmap = ({ data }: { data: DayCount }) => {
     count: day.count,
   }));
 
-  console.log(chartData);
-
   return (
     <Box width="100%">
       <CalendarHeatmap

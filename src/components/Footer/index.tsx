@@ -1,8 +1,8 @@
-import { Box, Container, Link, Typography, styled } from "@mui/material";
+import { Box, Container, Typography, styled } from "@mui/material";
 
 const FooterWrapper = styled(Container)(
   ({ theme }) => `
-        margin-top: ${theme.spacing(4)};
+    margin-top: ${theme.spacing(4)};
 `
 );
 

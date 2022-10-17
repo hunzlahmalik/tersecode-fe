@@ -6,16 +6,15 @@ import { ToastContentProps } from "react-toastify";
 import { withToast } from "state/utils";
 import {
   LoginAPIResponse,
+  SignUpActionProps,
   SignUpAPIResponse,
   TokenRefreshResponse,
+  LoginActionProps,
 } from "./types";
 
 export const login = createAsyncThunk(
   "user/login",
-  async (payload: {
-    email: string;
-    password: string;
-  }): Promise<Partial<LoginAPIResponse>> => {
+  async (payload: LoginActionProps): Promise<Partial<LoginAPIResponse>> => {
     const { data } = await axios.post(LOGIN_EP, payload);
     return data;
   }
@@ -23,11 +22,7 @@ export const login = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
   "user/signUp",
-  async (payload: {
-    email: string;
-    password: string;
-    username: string;
-  }): Promise<Partial<SignUpAPIResponse>> => {
+  async (payload: SignUpActionProps): Promise<Partial<SignUpAPIResponse>> => {
     const { data } = await axios.post(SIGNUP_EP, payload);
     return data;
   }

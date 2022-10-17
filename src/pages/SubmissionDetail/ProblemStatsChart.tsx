@@ -23,7 +23,7 @@ export const ProblemStatsChart = ({
     },
     labels: ["Accepted", "Failed"],
     stroke: {
-      colors: ["#fff"],
+      colors: [theme.palette.common.white],
     },
     fill: {
       opacity: 0.8,

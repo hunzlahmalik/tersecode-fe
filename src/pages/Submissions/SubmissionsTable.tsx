@@ -36,39 +36,10 @@ import {
 
 import { Submission, SubmissionStatus } from "types";
 import { SubmissionFilters, SubmissionFiltersProps } from "./SubmissionFilters";
+import { STATUS_OPTIONS, ORDER_OPTIONS, STATUS_MAP } from "./constants";
 
 const getStatusLabel = (status: SubmissionStatus): JSX.Element => {
-  const map: Record<SubmissionStatus, { color: string }> = {
-    Accepted: {
-      color: "success",
-    },
-    "Wrong Answer": {
-      color: "error",
-    },
-    "Time Limit Exceeded": {
-      color: "error",
-    },
-    "Memory Limit Exceeded": {
-      color: "error",
-    },
-    "Runtime Error": {
-      color: "error",
-    },
-    "Compilation Error": {
-      color: "error",
-    },
-    Running: {
-      color: "warning",
-    },
-    Pending: {
-      color: "warning",
-    },
-    "Output Limit Exceeded": {
-      color: "error",
-    },
-  };
-
-  const { color }: any = map[status];
+  const { color }: any = STATUS_MAP[status];
 
   return <Label color={color}>{status}</Label>;
 };
@@ -138,7 +109,7 @@ const SubmissionsTable = () => {
                 label="Status"
                 autoWidth
               >
-                {SubmissionFilters.statusOptions.map((statusOption) => (
+                {STATUS_OPTIONS.map((statusOption) => (
                   <MenuItem key={statusOption.value} value={statusOption.value}>
                     {statusOption.label}
                   </MenuItem>
@@ -154,7 +125,7 @@ const SubmissionsTable = () => {
                 label="Status"
                 autoWidth
               >
-                {SubmissionFilters.orderOptions.map((orderOption) => (
+                {ORDER_OPTIONS.map((orderOption) => (
                   <MenuItem key={orderOption.value} value={orderOption.value}>
                     {orderOption.label}
                   </MenuItem>

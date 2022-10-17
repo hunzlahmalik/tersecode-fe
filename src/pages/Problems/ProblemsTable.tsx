@@ -34,6 +34,7 @@ import {
 
 import { Difficulty, Problem, ProblemStatus } from "types";
 import { ProblemFilters, ProblemFiltersProps } from "./ProblemFilters";
+import { DIFFICULTY_OPTIONS, ORDER_OPTIONS, DIFFICULTY_MAP } from "./constants";
 
 const getStatusLabel = (status: ProblemStatus): JSX.Element => {
   const map = {
@@ -57,22 +58,7 @@ const getStatusLabel = (status: ProblemStatus): JSX.Element => {
 };
 
 const getDifficultyLabel = (difficulty: Difficulty): JSX.Element => {
-  const map = {
-    E: {
-      text: "Easy",
-      color: "success",
-    },
-    M: {
-      text: "Medium",
-      color: "warning",
-    },
-    H: {
-      text: "Hard",
-      color: "error",
-    },
-  };
-
-  const { text, color }: any = map[difficulty];
+  const { text, color }: any = DIFFICULTY_MAP[difficulty];
 
   return <Label color={color}>{text}</Label>;
 };
@@ -94,7 +80,6 @@ const ProblemsTable = () => {
   };
 
   useEffect(() => {
-    console.info(filters);
     const params = new ProblemFilters(filters).getFilterParams();
     const response = fetchProblems({ params });
     toast.promise(response, {
@@ -122,9 +107,7 @@ const ProblemsTable = () => {
           }
         }
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(() => {});
     return () => {};
   }, [dispatch, filters]);
 
@@ -145,7 +128,7 @@ const ProblemsTable = () => {
                 label="Status"
                 autoWidth
               >
-                {ProblemFilters.difficultyOptions.map((difficultyOption) => (
+                {DIFFICULTY_OPTIONS.map((difficultyOption) => (
                   <MenuItem
                     key={difficultyOption.value}
                     value={difficultyOption.value}
@@ -164,7 +147,7 @@ const ProblemsTable = () => {
                 label="Status"
                 autoWidth
               >
-                {ProblemFilters.orderOptions.map((orderOption) => (
+                {ORDER_OPTIONS.map((orderOption) => (
                   <MenuItem key={orderOption.value} value={orderOption.value}>
                     {orderOption.label}
                   </MenuItem>
@@ -230,15 +213,6 @@ const ProblemsTable = () => {
                   </TableCell>
                   {/* difficulty */}
                   <TableCell align="right">
-                    {/* <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
-                      gutterBottom
-                      noWrap
-                    >
-                      {problem.difficulty}
-                    </Typography> */}
                     {getDifficultyLabel(problem.difficulty)}
                   </TableCell>
                   {/* solution */}

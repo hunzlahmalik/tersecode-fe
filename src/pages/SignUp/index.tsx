@@ -22,6 +22,7 @@ import { AccountCircle, PasswordRounded } from "@mui/icons-material";
 
 import Logo from "components/LogoSign";
 import { selectUserIsAuthenticated } from "state/user/selectors";
+import { validateEmail, validatePassword } from "utils/validations";
 
 const OverviewWrapper = styled(Box)(
   () => `
@@ -72,34 +73,13 @@ const SignUp = () => {
       username: { ...data.username },
     };
 
-    if (valuesCopy.email.value === "") {
-      valuesCopy.email.error = true;
-      valuesCopy.email.helperText = "Email is required";
-    } else if (valuesCopy.email.value !== "") {
-      const emailRegex =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (!emailRegex.test(valuesCopy.email.value)) {
-        valuesCopy.email.error = true;
-        valuesCopy.email.helperText = "Invalid email";
-      } else {
-        valuesCopy.email.error = false;
-        valuesCopy.email.helperText = "";
-      }
-    }
+    let v = validateEmail(valuesCopy.email.value);
+    valuesCopy.email.error = !v;
+    valuesCopy.email.helperText = v.message;
 
-    if (valuesCopy.password.value === "") {
-      valuesCopy.password.error = true;
-      valuesCopy.password.helperText = "Password is required";
-    } else if (valuesCopy.password.value !== "") {
-      if (valuesCopy.password.value.length < 2) {
-        valuesCopy.password.error = true;
-        valuesCopy.password.helperText =
-          "Password must be at least 8 characters";
-      } else {
-        valuesCopy.password.error = false;
-        valuesCopy.password.helperText = "";
-      }
-    }
+    v = validatePassword(valuesCopy.email.value);
+    valuesCopy.password.error = !v;
+    valuesCopy.password.helperText = v.message;
 
     if (valuesCopy.username.value === "") {
       valuesCopy.username.error = true;
@@ -265,7 +245,7 @@ const SignUp = () => {
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => handleSubmit()}
+                        onClick={handleSubmit}
                         size="large"
                         sx={{ m: 1 }}
                         disabled={values.email.error || values.password.error}
