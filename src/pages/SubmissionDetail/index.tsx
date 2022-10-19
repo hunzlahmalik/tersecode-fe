@@ -17,6 +17,7 @@ import {
 import SuspenseLoader from "components/SuspenseLoader";
 import im404 from "assets/images/status/404.svg";
 import { Helmet } from "react-helmet-async";
+import { useQuery } from "react-query";
 import { ProblemStatsChart } from "./ProblemStatsChart";
 import { SubmissionsAnalytics } from "./SubmissionsAnalytics";
 import { Detail } from "./Detail";
@@ -33,36 +34,36 @@ export const SubmissionDetail = () => {
     selectSubmissionById(parseInt(id || "0", 10))
   );
 
+  useQuery("problemsubmissionstats", () =>
+    axios.get(`${PROBLEM_EP}${submission.problem}/stats/`).then((res) => {
+      setProblemStats(res.data);
+      return res.data;
+    })
+  );
+  useQuery("submissionproblemstats", () =>
+    axios
+      .get(`${SUBMISSION_EP}problem/${submission.problem}/stats/`)
+      .then((res) => {
+        setProblemSubmissionStats(res.data);
+        return res.data;
+      })
+  );
+  useQuery("submissioncode", () =>
+    axios
+      .get<string>(submission.code, {
+        baseURL: "",
+      })
+      .then((res) => {
+        setCode(res.data);
+      })
+  );
+
   useEffect(() => {
     if (!submission && id) {
       const promise = getSubmissionWithToast(dispatch, {
         id: parseInt(id, 10),
       });
       promise.catch(() => setIsFailed(true));
-    }
-    if (submission && !problemStats) {
-      axios.get(`${PROBLEM_EP}${submission.problem}/stats/`).then((res) => {
-        setProblemStats(res.data);
-      });
-      // .catch(() => setIsFailed(true));
-    }
-    if (submission && !problemSubmissionStats) {
-      axios
-        .get(`${SUBMISSION_EP}problem/${submission.problem}/stats/`)
-        .then((res) => {
-          setProblemSubmissionStats(res.data);
-        });
-      // .catch(() => setIsFailed(true));
-    }
-    if (submission && !code) {
-      axios
-        .get<string>(submission.code, {
-          baseURL: "",
-        })
-        .then((res) => {
-          setCode(res.data);
-        })
-        .catch(console.info);
     }
   }, [code, dispatch, id, problemStats, problemSubmissionStats, submission]);
 

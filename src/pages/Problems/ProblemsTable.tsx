@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch } from "state";
 import { addProblems } from "state/problems/actions";
 import { fetchProblems } from "state/problems/helper";
-import { toast } from "react-toastify";
 import {
   Tooltip,
   Divider,
@@ -33,6 +32,7 @@ import {
 } from "@mui/icons-material";
 
 import { Difficulty, Problem, ProblemStatus } from "types";
+import { useQuery } from "react-query";
 import { ProblemFilters, ProblemFiltersProps } from "./ProblemFilters";
 import { DIFFICULTY_OPTIONS, ORDER_OPTIONS, DIFFICULTY_MAP } from "./constants";
 
@@ -79,14 +79,9 @@ const ProblemsTable = () => {
     setFilters({ ...filters, [key]: value });
   };
 
-  useEffect(() => {
+  useQuery("fetchingproblems", () => {
     const params = new ProblemFilters(filters).getFilterParams();
     const response = fetchProblems({ params });
-    toast.promise(response, {
-      pending: "Loading Problems",
-      error: "Error Loading Problems",
-      success: "Problems Loaded",
-    });
 
     response
       .then((data) => {
@@ -106,10 +101,10 @@ const ProblemsTable = () => {
             setIsPrevPage(false);
           }
         }
+        return data;
       })
       .catch(() => {});
-    return () => {};
-  }, [dispatch, filters]);
+  });
 
   const theme = useTheme();
 

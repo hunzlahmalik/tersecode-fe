@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Footer from "components/Footer";
 import { axios } from "config/axios";
@@ -10,6 +10,7 @@ import { ProfileCover } from "components/ProfileCover";
 import { updateProfileWithToast } from "state/profile/actions";
 import { DayCount } from "types";
 import { PROBLEM_EP, SUBMISSION_EP } from "constants/endpoints";
+import { useQuery } from "react-query";
 import RecentActivity, { RecentActivityProps } from "./RecentActivity";
 import { Heatmap } from "./Heatmap";
 
@@ -32,27 +33,30 @@ const Profile = () => {
     });
   };
 
-  useEffect(() => {
-    if (profile && !dayCount) {
-      axios.get<DayCount>(`${SUBMISSION_EP}daycount/`).then((res) => {
-        setDayCount(res.data);
-      });
-    }
-    if (profile && !submissions) {
-      axios
-        .get<RecentActivityProps["submissions"]>(`${SUBMISSION_EP}userstats/`)
-        .then((res) => {
-          setSubmissions(res.data);
-        });
-    }
-    if (profile && !problems) {
-      axios
-        .get<RecentActivityProps["problems"]>(`${PROBLEM_EP}userstats/`)
-        .then((res) => {
-          setProblems(res.data);
-        });
-    }
-  }, [dayCount, problems, profile, submissions]);
+  useQuery("languages", () =>
+    axios.get<DayCount>(`${SUBMISSION_EP}daycount/`).then((res) => {
+      setDayCount(res.data);
+      return res.data;
+    })
+  );
+
+  useQuery("problemstats", () =>
+    axios
+      .get<RecentActivityProps["problems"]>(`${PROBLEM_EP}userstats/`)
+      .then((res) => {
+        setProblems(res.data);
+        return res.data;
+      })
+  );
+
+  useQuery("submissionuserstats", () =>
+    axios
+      .get<RecentActivityProps["submissions"]>(`${SUBMISSION_EP}userstats/`)
+      .then((res) => {
+        setSubmissions(res.data);
+        return res.data;
+      })
+  );
 
   return (
     <>
@@ -75,9 +79,20 @@ const Profile = () => {
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            {submissions && problems && (
-              <RecentActivity submissions={submissions} problems={problems} />
-            )}
+            <RecentActivity
+              submissions={
+                submissions || {
+                  total: 0,
+                  accepted: 0,
+                }
+              }
+              problems={
+                problems || {
+                  total: 0,
+                  solved: 0,
+                }
+              }
+            />
           </Grid>
           <Grid item xs={12}>
             {dayCount && <Heatmap data={dayCount} />}

@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "state";
 import { addSubmissions } from "state/submissions/actions";
 import { fetchSubmissions } from "state/submissions/helper";
-import { toast } from "react-toastify";
 import { format } from "date-fns";
 import {
   Tooltip,
@@ -35,6 +34,7 @@ import {
 } from "@mui/icons-material";
 
 import { Submission, SubmissionStatus } from "types";
+import { useQuery } from "react-query";
 import { SubmissionFilters, SubmissionFiltersProps } from "./SubmissionFilters";
 import { STATUS_OPTIONS, ORDER_OPTIONS, STATUS_MAP } from "./constants";
 
@@ -59,15 +59,9 @@ const SubmissionsTable = () => {
     setFilters({ ...filters, [key]: value });
   };
 
-  useEffect(() => {
-    console.info(filters);
+  useQuery("fetchsubmissions", () => {
     const params = new SubmissionFilters(filters).getFilterParams();
     const response = fetchSubmissions({ params });
-    toast.promise(response, {
-      pending: "Loading Submissions",
-      error: "Error Loading Submissions",
-      success: "Submissions Loaded",
-    });
 
     response
       .then((data) => {
@@ -87,12 +81,12 @@ const SubmissionsTable = () => {
             setIsPrevPage(false);
           }
         }
+        return data;
       })
       .catch((err) => {
         console.error(err);
       });
-    return () => {};
-  }, [dispatch, filters]);
+  });
 
   const theme = useTheme();
 

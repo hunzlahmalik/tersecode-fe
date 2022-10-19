@@ -5,6 +5,9 @@ import { HelmetProvider } from "react-helmet-async";
 import store, { persistor } from "state";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
+
+import { QueryClient, QueryClientProvider } from "react-query";
+
 import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
@@ -13,12 +16,15 @@ import "nprogress/nprogress.css";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <StrictMode>
     <HelmetProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <App />
+          <QueryClientProvider client={new QueryClient()}>
+            <App />
+          </QueryClientProvider>
         </PersistGate>
       </Provider>
     </HelmetProvider>
