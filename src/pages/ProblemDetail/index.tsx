@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useAppDispatch, useAppSelector } from "state";
 import { Navigate, useParams } from "react-router-dom";
 import { axios } from "config/axios";
+import { useQuery } from "react-query";
 import {
   getProblemWithToast,
   postProblemDiscussionWithToast,
@@ -58,13 +59,6 @@ const CustomTabPanel = ({ children, ...props }: TabPanelProps) => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     >
-      {/* <Box
-        padding={1}
-        paddingTop={3}
-        height="80%"
-        sx={{ overflow: "scroll", maxHeight: "80vh", width: "100%" }}
-        overflow="scroll"
-      > */}
       {children}
       {/* </Box> */}
     </TabPanel>
@@ -91,28 +85,34 @@ const Problems = () => {
   const problem = useAppSelector(selectProblemById(parseInt(id || "0", 10)));
   const profile = useAppSelector(selectProfile);
 
+  useQuery("languages", () =>
+    axios.get("problems/languages/").then((res) => {
+      setLanguages(res.data);
+      setLanguage(res.data[0].id.toString());
+      return res.data;
+    })
+  );
+
+  useQuery("fetchstatement", () =>
+    fetchStatement({ link: problem.statement }).then((res) => {
+      setStatement(res);
+      return res;
+    })
+  );
+
+  useQuery("fetchsolution", () =>
+    fetchSolution({ link: problem.solution as any }).then((res) => {
+      setSolution(res);
+      return res;
+    })
+  );
+
   useEffect(() => {
     if (!problem && id) {
       const promise = getProblemWithToast(dispatch, { id: parseInt(id, 10) });
       promise.catch(() => setIsFailed(true));
     }
-    if (problem && !statement) {
-      fetchStatement({ link: problem.statement }).then((res) =>
-        setStatement(res)
-      );
-    }
-    if (problem && problem.solution && !solution) {
-      fetchSolution({ link: problem.solution.solution }).then((res) =>
-        setSolution(res)
-      );
-    }
-    if (problem && !languages.length) {
-      axios.get("problems/languages/").then((res) => {
-        setLanguages(res.data);
-        setLanguage(res.data[0].id.toString());
-      });
-    }
-  }, [dispatch, id, problem, solution, statement]);
+  }, [dispatch, id, problem]);
 
   // useEffect for previous submissions
   useEffect(() => {
